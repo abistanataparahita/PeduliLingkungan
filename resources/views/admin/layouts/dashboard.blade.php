@@ -78,10 +78,45 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('admin.about.edit') }}"
+                           class="flex items-center gap-2 px-3 py-2 rounded-lg {{ request()->is('admin/about*') ? 'bg-lime/30 text-white' : 'hover:bg-white/5' }}">
+                            <x-icons name="leaf" class="w-5 h-5" />
+                            <span>Tentang Kami</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.testimonials.index') }}"
                            class="flex items-center gap-2 px-3 py-2 rounded-lg {{ request()->is('admin/testimonials*') ? 'bg-lime/30 text-white' : 'hover:bg-white/5' }}">
                             <x-icons name="chat-bubble-left-right" class="w-5 h-5" />
                             <span>Testimonial</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.products.index') }}"
+                           class="flex items-center gap-2 px-3 py-2 rounded-lg {{ request()->is('admin/products*') ? 'bg-lime/30 text-white' : 'hover:bg-white/5' }}">
+                            <x-icons name="shopping-bag" class="w-5 h-5" />
+                            <span>Produk</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.orders.index') }}"
+                           class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg {{ request()->is('admin/orders*') ? 'bg-lime/30 text-white' : 'hover:bg-white/5' }}">
+                            <span class="flex items-center gap-2">
+                                <x-icons name="chat-bubble-left-right" class="w-5 h-5" />
+                                <span>Pesanan</span>
+                            </span>
+                            @if(($pendingOrdersCount ?? 0) > 0)
+                                <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-red-600 text-white text-[11px] font-semibold">
+                                    {{ $pendingOrdersCount }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.users.index') }}"
+                           class="flex items-center gap-2 px-3 py-2 rounded-lg {{ request()->is('admin/users*') ? 'bg-lime/30 text-white' : 'hover:bg-white/5' }}">
+                            <x-icons name="user-group" class="w-5 h-5" />
+                            <span>Kelola User</span>
                         </a>
                     </li>
                     <li>
@@ -107,6 +142,18 @@
                     </h1>
                 </div>
                 <div class="flex items-center gap-3 text-xs text-gray-600">
+                    <a
+                        href="{{ route('admin.orders.index') }}"
+                        class="relative inline-flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 hover:bg-gray-50"
+                        title="Pesanan"
+                    >
+                        <x-icons name="bell" class="w-5 h-5 text-gray-700" />
+                        @if(($pendingOrdersCount ?? 0) > 0)
+                            <span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[10px] font-semibold flex items-center justify-center">
+                                {{ $pendingOrdersCount }}
+                            </span>
+                        @endif
+                    </a>
                     <span>{{ auth()->user()->name ?? 'Admin' }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -136,6 +183,15 @@
     <x-admin.confirm-modal />
 
     @stack('scripts')
+
+    <a
+        href="{{ route('home') }}"
+        target="_blank"
+        class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg hover:bg-emerald-800 transition"
+    >
+        <x-icons name="globe-alt" class="w-4 h-4" />
+        View Home Page
+    </a>
 </body>
 </html>
 

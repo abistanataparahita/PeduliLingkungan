@@ -229,7 +229,7 @@
 
     {{-- ABOUT --}}
     <section id="about" class="bg-cream py-12 sm:py-20 rv">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-end">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div>
                 <div class="flex items-center gap-4 mb-4">
                     <span class="font-heading text-5xl text-moss/20">01</span>
@@ -244,18 +244,26 @@
             </div>
             <div class="space-y-4 text-sm text-moss leading-relaxed">
                 <p>
-                    <strong>Peduli Lingkungan</strong> lahir dari keyakinan bahwa perubahan tidak harus menunggu kebijakan besar.
-                    Ia dimulai dari langkah kecil pemuda yang mau bergerak — hari ini.
+                    <strong>Pemuda Peduli Lingkungan</strong> adalah komunitas yang berfokus pada peningkatan kesadaran
+                    dan partisipasi generasi muda dalam menjaga serta melestarikan lingkungan hidup di sekitarnya.
                 </p>
                 <p>
-                    Berdiri di Purbalingga sejak 2025, kami merancang aksi-aksi sederhana tapi konsisten:
-                    menanam pohon, membersihkan sungai, mengedukasi sekolah, dan membangun kebiasaan zero waste.
+                    Sejak 2025, kami aktif menginisiasi beragam kegiatan edukasi, aksi sosial, dan kampanye peduli lingkungan
+                    yang mendorong perubahan positif di masyarakat — dari penanaman pohon, bersih sungai, hingga program zero waste.
+                </p>
+                <p>
+                    Dalam setiap gerakan, kami mengedepankan nilai kepemimpinan, komitmen, dan kemampuan memecahkan masalah
+                    agar pemuda tidak hanya peduli, tetapi juga siap menjadi agen perubahan di tengah masyarakat.
+                </p>
+                <p>
+                    Lewat ruang belajar dan kolaborasi yang terbuka, kami mengajak seluruh generasi muda untuk
+                    <em>Hijaukan Aksimu, Pedulikan Sekitarmu</em> dan bersama-sama merawat bumi untuk masa depan yang lebih baik.
                 </p>
             </div>
         </div>
 
-        <div class="max-w-6xl mx-auto px-4 mt-10 grid md:grid-cols-2 gap-8">
-            <div class="grid grid-cols-2 gap-3">
+        <div class="max-w-6xl mx-auto px-4 mt-10 grid md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-2 gap-3 md:col-span-1">
                 <div class="rounded-2xl bg-white p-5 shadow-sm">
                     <div class="text-leaf mb-2"><x-icons name="user-circle" class="w-8 h-8" /></div>
                     <h3 class="font-semibold text-sm mb-1">Leadership</h3>
@@ -278,8 +286,8 @@
                 </div>
             </div>
 
-            <div class="relative">
-                <div class="rounded-3xl bg-forest text-white p-7 relative overflow-hidden">
+            <div class="relative md:col-span-1">
+                <div class="rounded-3xl bg-forest text-white p-7 relative overflow-hidden h-full flex flex-col">
                     <div class="absolute -right-10 -top-10 w-32 h-32 bg-lime/10 rounded-full blur-2xl"></div>
                     <h3 class="font-heading text-xl mb-3">Visi Komunitas</h3>
                     <p class="text-sm text-spring/80 leading-relaxed">
@@ -288,7 +296,67 @@
                     <div class="mt-6 inline-flex items-center gap-2 rounded-full bg-lime text-forest text-[11px] font-semibold px-4 py-1.5">
                         100% Gratis · Terbuka · Berdampak
                     </div>
+
+                    @php
+                        $missions = [
+                            setting('about_mission_1', 'Meningkatkan kesadaran lingkungan di kalangan generasi muda melalui edukasi dan kampanye peduli lingkungan.'),
+                            setting('about_mission_2', 'Menggerakkan aksi nyata seperti kegiatan penghijauan, kebersihan lingkungan, dan program sosial berbasis lingkungan.'),
+                            setting('about_mission_3', 'Membangun karakter kepemimpinan pemuda yang peduli terhadap keberlanjutan lingkungan dan masyarakat.'),
+                            setting('about_mission_4', 'Mendorong kolaborasi antara pemuda, masyarakat, dan berbagai pihak untuk menciptakan perubahan positif bagi lingkungan.'),
+                            setting('about_mission_5', 'Menjadi wadah pengembangan diri bagi anggota untuk belajar, berkontribusi, dan tumbuh bersama dalam gerakan peduli lingkungan.'),
+                        ];
+                        $hasMissions = collect($missions)->filter(fn($m) => !empty($m))->isNotEmpty();
+                    @endphp
+
+                    @if($hasMissions)
+                        <div class="mt-6 pt-5 border-t border-white/15">
+                            <p class="text-xs font-semibold text-spring/80 uppercase tracking-[0.18em] mb-3">
+                                Misi Komunitas
+                            </p>
+                            <ul class="space-y-2.5 text-sm text-spring/85">
+                                @foreach($missions as $mission)
+                                    @if(! empty($mission))
+                                        <li class="flex items-start gap-2.5">
+                                            <span class="mt-[3px] inline-flex w-4 h-4 rounded-full bg-lime/90 text-forest items-center justify-center">
+                                                <x-icons name="check" class="w-3 h-3" />
+                                            </span>
+                                            <span class="leading-relaxed">{{ $mission }}</span>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
+            </div>
+
+            <div class="md:col-span-1">
+                @php
+                    $aboutImage = setting('about_image');
+                @endphp
+                @if($aboutImage)
+                    <div class="relative rounded-3xl overflow-hidden bg-moss/20 h-full min-h-[260px]">
+                        <img
+                            src="{{ asset('storage/'.$aboutImage) }}"
+                            alt="Tentang Komunitas Peduli Lingkungan"
+                            class="w-full h-full object-cover"
+                            onerror="this.src='/images/placeholder.svg'"
+                        >
+                    </div>
+                @else
+                    <div class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-forest via-moss to-black/80 h-full min-h-[260px] flex items-center justify-center">
+                        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top,_#a4e57a_0,_transparent_55%)]"></div>
+                        <div class="relative z-10 flex flex-col items-center text-center text-spring/90 px-6">
+                            <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4">
+                                <x-icons name="leaf" class="w-8 h-8" />
+                            </div>
+                            <p class="text-sm font-semibold mb-1">Cerita Komunitas</p>
+                            <p class="text-xs text-spring/80">
+                                Tambahkan foto "Tentang Kami" dari dashboard admin untuk membuat section ini lebih hidup.
+                            </p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
@@ -310,16 +378,52 @@
 
             <div class="grid md:grid-cols-3 gap-6">
                 @forelse($events as $index => $event)
-                    <article
-                        class="{{ $index === 0 ? 'md:col-span-2' : '' }} relative rounded-3xl bg-moss/80 border border-white/10 p-6 flex flex-col justify-between hover:-translate-y-1 hover:border-lime/50 transition group"
-                    >
+                    @php
+                        $isPast = $event->event_date && $event->event_date->isPast();
+                        $isUpcoming = $event->event_date && $event->event_date->isFuture();
+                        $isToday = $event->event_date && $event->event_date->isToday();
+
+                        $cardClasses = 'relative rounded-3xl border p-6 flex flex-col justify-between transition group';
+                        if ($index === 0) {
+                            $cardClasses .= ' md:col-span-2';
+                        }
+
+                        if ($isToday) {
+                            $cardClasses .= ' bg-emerald-700/90 border-lime/60 shadow-lg shadow-lime/40';
+                        } elseif ($isUpcoming) {
+                            $cardClasses .= ' bg-moss/85 border-lime/50 shadow-md shadow-lime/30';
+                        } elseif ($isPast) {
+                            $cardClasses .= ' bg-moss/60 border-white/10 opacity-70 grayscale hover:opacity-80';
+                        } else {
+                            $cardClasses .= ' bg-moss/80 border-white/10';
+                        }
+                    @endphp
+
+                    <article class="{{ $cardClasses }} hover:-translate-y-1">
+                        @if($isUpcoming)
+                            <span class="absolute top-4 left-4 text-[10px] font-semibold px-3 py-1 rounded-full bg-lime text-forest uppercase tracking-[0.18em] inline-flex items-center gap-1.5">
+                                <x-icons name="calendar-days" class="w-3.5 h-3.5" />
+                                Akan Datang
+                            </span>
+                        @elseif($isToday)
+                            <span class="absolute top-4 left-4 text-[10px] font-semibold px-3 py-1 rounded-full bg-amber-400 text-forest uppercase tracking-[0.18em] inline-flex items-center gap-1.5 animate-pulse">
+                                <x-icons name="star" class="w-3.5 h-3.5" />
+                                Hari Ini!
+                            </span>
+                        @elseif($isPast)
+                            <span class="absolute top-4 left-4 text-[10px] font-semibold px-3 py-1 rounded-full bg-white/10 text-spring/80 uppercase tracking-[0.18em] inline-flex items-center gap-1.5">
+                                <x-icons name="check-circle" class="w-3.5 h-3.5" />
+                                Sudah Berlalu
+                            </span>
+                        @endif
+
                         @if($index === 0)
                             <span class="absolute top-4 right-4 text-[10px] font-semibold px-3 py-1 rounded-full bg-lime text-forest uppercase tracking-[0.18em]">
                                 Terdekat
                             </span>
                         @endif
-                        <div class="flex items-start gap-4 mb-4">
-                            <div class="flex flex-col items-center justify-center rounded-2xl bg-forest/70 px-3 py-2 text-center">
+                        <div class="mt-8 flex items-start gap-4 mb-4">
+                            <div class="flex flex-col items-center justify-center rounded-2xl bg-forest/80 px-3.5 py-2.5 text-center shadow-inner shadow-black/20">
                                 <span class="font-heading text-2xl leading-none">
                                     {{ $event->event_date?->format('d') }}
                                 </span>
@@ -327,8 +431,8 @@
                                     {{ $event->event_date?->format('M') }}
                                 </span>
                             </div>
-                            <div>
-                                <h3 class="font-heading text-lg mb-1 group-hover:text-lime transition">
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-heading text-lg mb-1 group-hover:text-lime transition line-clamp-2">
                                     {{ $event->title }}
                                 </h3>
                                 <p class="text-xs text-spring/80 line-clamp-3">
@@ -337,11 +441,36 @@
                             </div>
                         </div>
                         <div class="flex flex-wrap items-center gap-3 mt-2 text-[11px] text-spring/80">
-                            <span class="inline-flex items-center gap-1"><x-icons name="calendar-days" class="w-3.5 h-3.5" /> {{ $event->event_date?->translatedFormat('d F Y') }} {{ $event->event_time ? '· ' . \Illuminate\Support\Str::of($event->event_time)->substr(0,5) . ' WIB' : '' }}</span>
-                            <span class="inline-flex items-center gap-1"><x-icons name="map-pin" class="w-3.5 h-3.5" /> {{ $event->location }}</span>
+                            <span class="inline-flex items-center gap-1.5">
+                                <x-icons name="calendar-days" class="w-3.5 h-3.5" />
+                                {{ $event->event_date?->translatedFormat('d F Y') }}
+                                @if($event->event_time)
+                                    · {{ \Illuminate\Support\Str::of($event->event_time)->substr(0,5) }} WIB
+                                @endif
+                            </span>
+                            <span class="inline-flex items-center gap-1.5">
+                                <x-icons name="map-pin" class="w-3.5 h-3.5" />
+                                {{ $event->location }}
+                            </span>
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-white/10 border border-white/15">
                                 {{ $event->category }}
                             </span>
+                        </div>
+
+                        @php
+                            $eventDetailUrl = \Illuminate\Support\Facades\Route::has('events.show')
+                                ? route('events.show', $event->slug)
+                                : route('events.index');
+                        @endphp
+
+                        <div class="mt-4 flex justify-end">
+                            <a
+                                href="{{ $eventDetailUrl }}"
+                                class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-lime hover:text-white hover:underline"
+                            >
+                                Lihat Detail
+                                <x-icons name="arrow-right" class="w-3.5 h-3.5" />
+                            </a>
                         </div>
                     </article>
                 @empty
@@ -356,6 +485,64 @@
                     Lihat Semua Event →
                 </a>
             </div>
+        </div>
+    </section>
+
+    {{-- PRODUCTS --}}
+    <section id="products" class="bg-cream py-12 sm:py-20 rv">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                <div>
+                    <span class="section-eyebrow text-leaf">Merchandise</span>
+                    <h2 class="font-heading text-3xl md:text-4xl mt-2 text-forest">
+                        Produk <span class="italic text-leaf">Peduli Lingkungan</span>
+                    </h2>
+                </div>
+                <p class="text-xs md:text-sm text-moss/80 max-w-sm md:text-right">
+                    Kaos, mug, dan merchandise lainnya. Dukung gerakan hijau sekaligus dapat barang keren.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse($products as $product)
+                    <a href="{{ route('products.show', $product) }}" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-gray-100">
+                        <div class="aspect-square bg-gray-100 relative">
+                            @if($product->image)
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-300">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Tanpa gambar</div>
+                            @endif
+                            @if($product->is_preorder)
+                                <span class="absolute top-2 left-2 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold {{ $product->is_preorder_closed ? 'bg-gray-600 text-white' : 'bg-violet-600 text-white' }}">
+                                    {{ $product->is_preorder_closed ? 'Pre Order Ditutup' : 'Pre Order' }}
+                                </span>
+                            @elseif($product->has_discount)
+                                <span class="absolute top-2 right-2 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-600 text-white">Diskon</span>
+                            @endif
+                        </div>
+                        <div class="p-4">
+                            <p class="text-[11px] text-gray-500">{{ $product->sku }}</p>
+                            <h3 class="font-semibold text-forest mt-0.5 line-clamp-2 group-hover:text-leaf transition">{{ $product->name }}</h3>
+                            <p class="mt-2 text-sm font-medium text-forest">
+                                {{ $product->formatted_final_price }}
+                                @if($product->has_discount)
+                                    <span class="text-gray-400 line-through text-xs ml-1">{{ $product->formatted_selling_price }}</span>
+                                @endif
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    <p class="col-span-full text-center text-moss/80 py-8">Belum ada produk. Nantikan merchandise resmi Peduli Lingkungan.</p>
+                @endforelse
+            </div>
+
+            @if($products->isNotEmpty())
+                <div class="mt-8 text-right">
+                    <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 text-sm font-medium text-leaf hover:text-forest transition">
+                        Lihat Semua Produk →
+                    </a>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -610,6 +797,25 @@
                         Kata Mereka yang<br>
                         <span class="italic text-lime">Sudah Bergerak</span>
                     </h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    @auth
+                        <a
+                            href="{{ route('testimonials.create') }}"
+                            class="inline-flex items-center gap-2 rounded-full bg-lime text-forest font-semibold text-sm px-5 py-3 hover:bg-white transition"
+                        >
+                            Tulis Testimoni
+                            <x-icons name="arrow-right" class="w-5 h-5" />
+                        </a>
+                    @else
+                        <a
+                            href="{{ route('login') }}"
+                            class="inline-flex items-center gap-2 rounded-full border border-white/25 text-white/90 font-semibold text-sm px-5 py-3 hover:bg-white/10 transition"
+                        >
+                            Login untuk menulis testimoni
+                            <x-icons name="arrow-right" class="w-5 h-5" />
+                        </a>
+                    @endauth
                 </div>
             </div>
 

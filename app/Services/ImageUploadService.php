@@ -14,6 +14,7 @@ class ImageUploadService
     public const GALLERIES = 1400;
     public const ARTICLES = 800;
     public const AVATARS = 400;
+    public const PRODUCTS = 800;
 
     protected ImageManager $manager;
     protected string $disk;

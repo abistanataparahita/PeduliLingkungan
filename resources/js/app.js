@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: prefersReducedMotion ? 'auto' : 'smooth',
             });
 
-            // Tutup mobile menu jika terbuka
-            const nav = document.querySelector('[x-data]');
+            // Tutup mobile menu jika terbuka (khusus navbar utama)
+            const nav = document.getElementById('main-nav');
             if (nav && typeof Alpine !== 'undefined') {
                 const alpineData = Alpine.$data(nav);
                 if (alpineData && typeof alpineData.open !== 'undefined') {

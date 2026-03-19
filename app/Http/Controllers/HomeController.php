@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Banner;
 use App\Models\Event;
 use App\Models\Gallery;
+use App\Models\Product;
 use App\Models\Testimonial;
 
 class HomeController extends Controller
@@ -70,6 +71,11 @@ class HomeController extends Controller
             ->where('is_active', true)
             ->first();
 
+        $products = Product::query()
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
         return view('home', [
             'banners' => $banners,
             'bannerMeta' => $bannerMeta,
@@ -79,6 +85,7 @@ class HomeController extends Controller
             'articles' => $articles,
             'popupEvent' => $popupEvent,
             'navbarEvent' => $navbarEvent,
+            'products' => $products,
         ]);
     }
 }
